@@ -13,7 +13,7 @@ import {
   LexicalEditor,
 } from "lexical"
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
-import ImageNode, { $isImageNode } from "../nodes/ImageNode"
+import ImageNode, { $isImageNode } from "./ImageNode"
 
 type InsertImagePayload = {
   source: string

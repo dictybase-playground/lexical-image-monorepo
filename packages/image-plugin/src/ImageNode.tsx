@@ -5,7 +5,7 @@ import {
   SerializedLexicalNode,
   LexicalNode,
 } from "lexical"
-import ImageComponent from "../ImageComponent"
+import ImageComponent from "./ImageComponent"
 
 type SerializedImageNode = Spread<
   {
