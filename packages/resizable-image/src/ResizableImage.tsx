@@ -18,7 +18,7 @@ export type ImageProperties = {
   onResize: (width: number, height: number) => void
 }
 
-const Image = ({
+const ResizableImage = ({
   src,
   alt,
   imageReference,
@@ -69,4 +69,4 @@ const Image = ({
   )
 }
 
-export default Image
+export default ResizableImage
