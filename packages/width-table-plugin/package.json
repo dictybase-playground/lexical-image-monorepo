@@ -19,11 +19,11 @@
     "react": "17.0.2"
   },
   "devDependencies": {
+    "@tsconfig/dictybase": "*",
     "@types/react": "17.0.52",
     "@vitest/coverage-c8": "^0.28.5",
     "eslint": "^8.31.0",
     "eslint-config-dictybase": "*",
-    "ts-config": "*",
     "typescript": "^4.9.3",
     "vitest": "^0.28.4"
   }

@@ -15,11 +15,11 @@
     "lexical": "^0.7.6"
   },
   "devDependencies": {
+    "@tsconfig/dictybase": "*",
     "@types/react": "17.0.52",
     "@types/react-dom": "17.0.18",
     "eslint": "^8.31.0",
     "eslint-config-dictybase": "*",
-    "tsconfig": "*",
     "typescript": "^4.9.3"
   }
 }
