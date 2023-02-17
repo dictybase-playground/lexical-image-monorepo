@@ -1,6 +1,6 @@
 import { useEffect } from "react"
-import SaveButton from "../SaveButton"
-import useLocalStorage from "../useLocalStorage"
+import SaveButton from "./SaveButton"
+import useLocalStorage from "./useLocalStorage"
 
 const LocalPersistencePlugin = () => {
   const { retrieveLocalStorage, saveLocalStorage } = useLocalStorage()
@@ -9,7 +9,7 @@ const LocalPersistencePlugin = () => {
     retrieveLocalStorage()
   }, [retrieveLocalStorage])
 
-  return <SaveButton save={saveLocalStorage} />
+  return <SaveButton handleSave={saveLocalStorage} />
 }
 
 export default LocalPersistencePlugin
