@@ -1,0 +1,22 @@
+{
+  "name": "treeview-plugin",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint --ext .jsx,.js,.ts,.tsx src/"
+  },
+  "dependencies": {
+    "@lexical/react": "^0.7.6",
+    "lexical": "^0.7.6"
+  },
+  "devDependencies": {
+    "@types/react": "17.0.52",
+    "@types/react-dom": "17.0.18",
+    "eslint": "^8.31.0",
+    "eslint-config-dictybase": "*",
+    "ts-config": "*",
+    "typescript": "^4.9.3"
+  }
+}
