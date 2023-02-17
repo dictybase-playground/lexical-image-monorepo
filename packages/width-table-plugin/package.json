@@ -1,0 +1,30 @@
+{
+  "name": "width-table-plugin",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "coverage": "vitest run --coverage",
+    "lint": "eslint --ext .jsx,.js,.ts,.tsx src/",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@lexical/react": "^0.7.6",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@mobily/ts-belt": "^3.13.1",
+    "jotai": "^1.12.0",
+    "lexical": "^0.7.6",
+    "react": "17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "17.0.52",
+    "@vitest/coverage-c8": "^0.28.5",
+    "eslint": "^8.31.0",
+    "eslint-config-dictybase": "*",
+    "ts-config": "*",
+    "typescript": "^4.9.3",
+    "vitest": "^0.28.4"
+  }
+}
