@@ -1,0 +1,28 @@
+{
+  "name": "dictybase-toolbar",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/index.tsx",
+  "scripts": {
+    "coverage": "vitest run --coverage",
+    "lint": "eslint --ext .jsx,.js,.ts,.tsx src/",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@lexical/react": "^0.7.6",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "jotai": "^1.12.0",
+    "lexical": "^0.7.6",
+    "react": "17.0.2",
+    "image-plugin": "*"
+  },
+  "devDependencies": {
+    "@tsconfig/dictybase": "*",
+    "@types/react": "17.0.52",
+    "eslint": "^8.31.0",
+    "eslint-config-dictybase": "*",
+    "typescript": "^4.9.3"
+  }
+}
