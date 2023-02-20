@@ -1,3 +1,4 @@
 {
-  "extends": ["dictybase"]
+  "extends": ["dictybase"],
+  "root": true
 }
