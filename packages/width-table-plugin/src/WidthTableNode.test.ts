@@ -15,7 +15,7 @@ const data: SerializedWidthTableNode = {
   width,
 }
 
-describe("CustomTableNode", () => {
+describe("WidthTableNode", () => {
   const testEditor = createEditor({
     ...testConfig,
     nodes: [WidthTableNode],
@@ -64,7 +64,7 @@ describe("CustomTableNode", () => {
   test("it accepts a width argument of type number that initializes the table node's width node with the given value", () => {
     expect(tableWidth).toEqual(width)
   })
-  test("implements a static clone method that accepts an instance of a CustomTableNode and returns a new CustomTableNode with the same width and key", () => {
+  test("implements a static clone method that accepts an instance of a WidthTableNode and returns a new WidthTableNode with the same width and key", () => {
     expect(tableNodeClone).toBeInstanceOf(WidthTableNode)
     expect(tableNodeCloneWidth).toEqual(width)
     expect(tableNodeCloneKey).toEqual(tableNodeKey)
@@ -72,7 +72,7 @@ describe("CustomTableNode", () => {
   test("implements an exportJSON method that returns an object with a width property", () => {
     expect(serializedTableNode).toHaveProperty("width")
   })
-  test("implements a static importJSON method that takes a serialized custom table node and returns a CustomTableNode instance", () => {
+  test("implements a static importJSON method that takes a serialized custom table node and returns a WidthTableNode instance", () => {
     expect(importedTableNode).toBeInstanceOf(WidthTableNode)
     expect(importedTableNodeWidth).toEqual(width)
   })
