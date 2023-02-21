@@ -11,11 +11,11 @@ import {
 } from "@material-ui/core"
 import { useSetAtom } from "jotai"
 import { INSERT_IMAGE_COMMAND } from "image-plugin"
-import dialogOpenAtom from "../context/atomConfigs"
+import { insertImageDialogOpenAtom } from "../context/atomConfigs"
 
 const ImageDialogContents = () => {
   const [editor] = useLexicalComposerContext()
-  const setIsDialogOpen = useSetAtom(dialogOpenAtom)
+  const setIsDialogOpen = useSetAtom(insertImageDialogOpenAtom)
   const [url, setUrl] = useState("")
   const [altText, setAltText] = useState("")
 
