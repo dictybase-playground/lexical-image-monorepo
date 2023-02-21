@@ -1,19 +1,32 @@
 import ToolBar from "@material-ui/core/Toolbar"
-import { makeStyles } from "@material-ui/core"
+import UndoButton from "./components/UndoButton"
+import RedoButton from "./components/RedoButton"
+import FontSizeDropdown from "./components/FontSizeDropdown"
+import FontFamilyDropdown from "./components/FontFamilyDropdown"
+import BlockFormatDropdown from "./components/BlockFormatDropdown"
+import FormatBoldButton from "./components/FormatBoldButton"
+import FormatItalicButton from "./components/FormatItalicButton"
+import FormatUnderlineButton from "./components/FormatUnderlineButton"
 import InsertImageButton from "./components/InsertImageButton"
-
-const useToolbarStyles = makeStyles({
-  root: {
-    marginBottom: "1px",
-    background: "#fff",
-  },
-})
+import InsertTableButton from "./components/InsertTableButton"
+import useCleanup from "./hooks/useCleanup"
+import useToolbarStyles from "./hooks/useToolbarStyles"
 
 const DictybaseToolbar = () => {
+  useCleanup()
   const { root } = useToolbarStyles()
   return (
     <ToolBar variant="dense" className={root}>
+      <UndoButton />
+      <RedoButton />
+      <FontSizeDropdown />
+      <FontFamilyDropdown />
+      <BlockFormatDropdown />
+      <FormatBoldButton />
+      <FormatItalicButton />
+      <FormatUnderlineButton />
       <InsertImageButton />
+      <InsertTableButton />
     </ToolBar>
   )
 }
