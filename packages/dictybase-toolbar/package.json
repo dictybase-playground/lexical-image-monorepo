@@ -13,8 +13,10 @@
     "@lexical/react": "^0.7.6",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
-    "jotai": "^1.12.0",
+    "jotai": "^2.0.2",
+    "jotai-optics": "^0.3.0",
     "lexical": "^0.7.6",
+    "optics-ts": "^2.4.0",
     "react": "17.0.2",
     "image-plugin": "*"
   },
