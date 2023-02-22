@@ -7,7 +7,6 @@ import BlockFormatDropdown from "./components/BlockFormatDropdown"
 import FormatBoldButton from "./components/FormatBoldButton"
 import FormatItalicButton from "./components/FormatItalicButton"
 import FormatUnderlineButton from "./components/FormatUnderlineButton"
-import InsertImageButton from "./components/InsertImageButton"
 import InsertTableButton from "./components/InsertTableButton"
 import useCleanup from "./hooks/useCleanup"
 import useToolbarStyles from "./hooks/useToolbarStyles"
@@ -25,7 +24,6 @@ const DictybaseToolbar = () => {
       <FormatBoldButton />
       <FormatItalicButton />
       <FormatUnderlineButton />
-      <InsertImageButton />
       <InsertTableButton />
     </ToolBar>
   )
