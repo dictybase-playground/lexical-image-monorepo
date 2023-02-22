@@ -3,3 +3,4 @@ export {
   default as WidthTablePlugin,
   INSERT_WIDTH_TABLE_COMMAND,
 } from "./WidthTablePlugin"
+export { default as $createWidthTable } from "./$createWidthTable"
