@@ -12,7 +12,8 @@
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "jotai": "^1.12.0",
-    "lexical": "^0.7.6"
+    "lexical": "^0.7.6",
+    "react": "17.0.2"
   },
   "devDependencies": {
     "@tsconfig/dictybase": "*",
