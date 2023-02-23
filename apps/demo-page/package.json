@@ -1,0 +1,26 @@
+{
+  "name": "@dictybase/demo-page",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "vite",
+    "lint": "eslint --ext .jsx,.js,.ts,.tsx src/"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "lexical-editor": "*"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^2.2.0",
+    "@types/react": "17.0.52",
+    "@types/react-dom": "17.0.18",
+    "eslint": "^8.31.0",
+    "eslint-config-dictybase": "*",
+    "tsconfig": "*",
+    "typescript": "^4.9.3",
+    "vite": "^3.1.0"
+  }
+}
