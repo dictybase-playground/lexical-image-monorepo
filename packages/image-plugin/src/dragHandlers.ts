@@ -33,6 +33,7 @@ export const onDragStart = (event: DragEvent) => {
 }
 
 export const onDrop = (event: DragEvent) => {
+  event.preventDefault()
   if (!(event.target instanceof Node) || !(event.target instanceof HTMLElement))
     return false
 
