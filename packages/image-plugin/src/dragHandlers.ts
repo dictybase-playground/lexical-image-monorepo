@@ -5,7 +5,6 @@ import {
   $createRangeSelection,
   $setSelection,
   LexicalEditor,
-  $insertNodes,
 } from "lexical"
 import { $isImageNode } from "./ImageNode"
 import { INSERT_IMAGE_COMMAND } from "./ImagePlugin"
@@ -24,13 +23,6 @@ const getImageNodeFromSelection = () => {
   const nodes = selection.getNodes()
   return $isImageNode(nodes[0]) ? nodes[0] : null
 }
-
-const getCursorDistanceFromElementY = (clientY: number, ElementY: number) =>
-  Math.abs(clientY - ElementY)
-
-const shouldInsertAfter = (clientY: number, top: number, bottom: number) =>
-  getCursorDistanceFromElementY(clientY, top) >
-  getCursorDistanceFromElementY(clientY, bottom)
 
 const getRangeSelectionFromPoint = (x: number, y: number) => {
   const rangeSelection = $createRangeSelection()
@@ -67,7 +59,7 @@ export const onDrop = (event: DragEvent, editor: LexicalEditor) => {
   if (!imageNode) return false
 
   $setSelection(getRangeSelectionFromPoint(event.clientX, event.clientY))
-  console.log(getRangeSelectionFromPoint(event.clientX, event.clientY))
+
   editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
     source: imageNode.source,
     width: imageNode.width,
