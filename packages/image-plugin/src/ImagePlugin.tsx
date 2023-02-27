@@ -44,9 +44,10 @@ const ImagePlugin = () => {
       onDragStart,
       COMMAND_PRIORITY_HIGH,
     )
+
     const unregisterDrop = editor.registerCommand(
       DROP_COMMAND,
-      (event) => onDrop(event),
+      (event) => onDrop(event, editor),
       COMMAND_PRIORITY_HIGH,
     )
 
