@@ -1,13 +1,9 @@
+import { $setSelection, LexicalEditor } from "lexical"
 import {
-  $getSelection,
-  $isNodeSelection,
-  $getNearestNodeFromDOMNode,
-  $createRangeSelection,
-  $setSelection,
-  LexicalEditor,
-} from "lexical"
-import { $isImageNode } from "./ImageNode"
-import { INSERT_IMAGE_COMMAND } from "./ImagePlugin"
+  getImageNodeFromSelection,
+  getRangeSelectionFromPoint,
+} from "./dragHelpers"
+import { INSERT_IMAGE_COMMAND } from "./InsertImageCommand"
 // On Firefox, when the image is dragged, a transparent version of the image hovers
 // with the user's cursor. This can make it difficult to see where the image is
 // being moved precisely. The drag image can be replaced with transparent image
@@ -17,34 +13,6 @@ const TRANSPARENT_IMAGE =
 const img = document.createElement("img")
 img.src = TRANSPARENT_IMAGE
 
-const getImageNodeFromSelection = () => {
-  const selection = $getSelection()
-  if (!$isNodeSelection(selection)) return null
-  const nodes = selection.getNodes()
-  return $isImageNode(nodes[0]) ? nodes[0] : null
-}
-
-const getRangeSelectionFromPoint = (x: number, y: number) => {
-  const rangeSelection = $createRangeSelection()
-
-  if (document.caretPositionFromPoint) {
-    const caretPosition = document.caretPositionFromPoint(x, y)
-    if (!caretPosition) return rangeSelection
-    rangeSelection.setTextNodeRange(
-      $getNearestNodeFromDOMNode(caretPosition.offsetNode),
-      caretPosition.offset,
-      $getNearestNodeFromDOMNode(caretPosition.offsetNode),
-      caretPosition.offset,
-    )
-  } else if (document.caretRangeFromPoint) {
-    const range = document.caretRangeFromPoint(x, y)
-    if (!range) return rangeSelection
-    rangeSelection.applyDOMRange(range)
-  }
-
-  return rangeSelection
-}
-
 export const onDragStart = (event: DragEvent) => {
   event.dataTransfer?.setDragImage(img, 0, 0)
   return true
@@ -52,8 +20,7 @@ export const onDragStart = (event: DragEvent) => {
 
 export const onDrop = (event: DragEvent, editor: LexicalEditor) => {
   event.preventDefault()
-  if (!(event.target instanceof Node) || !(event.target instanceof HTMLElement))
-    return false
+  if (!(event.target instanceof Node)) return false
 
   const imageNode = getImageNodeFromSelection()
   if (!imageNode) return false
