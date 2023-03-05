@@ -32,10 +32,11 @@ export const getRangeSelectionFromPoint = (x: number, y: number) => {
     )
     return rangeSelection
   }
-  // eslint-disable-next-line compat/compat
-  const range = document.caretRangeFromPoint(x, y)
-  if (!range) return null
-  rangeSelection.applyDOMRange(range)
+  if (document.caretRangeFromPoint) {
+    const range = document.caretRangeFromPoint(x, y)
+    if (!range) return null
+    rangeSelection.applyDOMRange(range)
+  }
 
   return rangeSelection
 }
