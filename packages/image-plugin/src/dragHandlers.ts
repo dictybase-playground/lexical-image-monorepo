@@ -21,7 +21,6 @@ export const onDragStart = (event: DragEvent) => {
 export const onDrop = (event: DragEvent, editor: LexicalEditor) => {
   event.preventDefault()
   if (!(event.target instanceof Node)) return false
-
   const imageNode = getImageNodeFromSelection()
   if (!imageNode) return false
 
