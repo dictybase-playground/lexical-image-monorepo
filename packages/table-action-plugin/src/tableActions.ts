@@ -1,4 +1,4 @@
-import { LexicalEditor } from "lexical"
+import { LexicalEditor, $getRoot } from "lexical"
 import {
   TableCellNode,
   $getTableNodeFromLexicalNodeOrThrow,
@@ -7,7 +7,20 @@ import {
   $getElementGridForTableNode,
   $insertTableRow,
   $insertTableColumn,
+  $removeTableRowAtIndex,
+  $deleteTableColumn,
 } from "@lexical/table"
+
+const clearTableSelection = (
+  editor: LexicalEditor,
+  tableCellNode: TableCellNode,
+) => {
+  if (tableCellNode && tableCellNode.isAttached()) return
+  editor.update(() => {
+    const rootNode = $getRoot()
+    rootNode.selectStart()
+  })
+}
 
 export const deleteTable = (
   editor: LexicalEditor,
@@ -44,5 +57,33 @@ export const insertColumn = (
     const column = $getTableColumnIndexFromTableCellNode(tableCellNode)
     const grid = $getElementGridForTableNode(editor, tableNode)
     $insertTableColumn(tableNode, column, insertAfter, 1, grid)
+  })
+}
+
+export const deleteRow = (
+  editor: LexicalEditor,
+  tableCellNode: TableCellNode | null,
+) => {
+  editor.update(() => {
+    if (!tableCellNode) return
+    $removeTableRowAtIndex(
+      $getTableNodeFromLexicalNodeOrThrow(tableCellNode),
+      $getTableRowIndexFromTableCellNode(tableCellNode),
+    )
+    clearTableSelection(editor, tableCellNode)
+  })
+}
+
+export const deleteColumn = (
+  editor: LexicalEditor,
+  tableCellNode: TableCellNode | null,
+) => {
+  if (!tableCellNode) return
+  editor.update(() => {
+    $deleteTableColumn(
+      $getTableNodeFromLexicalNodeOrThrow(tableCellNode),
+      $getTableColumnIndexFromTableCellNode(tableCellNode),
+    )
+    clearTableSelection(editor, tableCellNode)
   })
 }

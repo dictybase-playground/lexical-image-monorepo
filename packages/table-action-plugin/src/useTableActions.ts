@@ -1,28 +1,19 @@
-import { $getRoot, LexicalEditor } from "lexical"
+import { LexicalEditor } from "lexical"
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
 import {
   TableCellNode,
   $getTableNodeFromLexicalNodeOrThrow,
-  $getTableColumnIndexFromTableCellNode,
-  $getTableRowIndexFromTableCellNode,
   $getElementGridForTableNode,
-  $removeTableRowAtIndex,
-  $deleteTableColumn,
 } from "@lexical/table"
 import { useAtomValue, useSetAtom, SetStateAction } from "jotai"
 import { selectedTableCellNode, tableActionMenuOpenAtom } from "./atomConfigs"
-import { deleteTable, insertRow, insertColumn } from "./tableActions"
-
-const clearTableSelection = (
-  editor: LexicalEditor,
-  tableCellNode: TableCellNode,
-) => {
-  if (tableCellNode && tableCellNode.isAttached()) return
-  editor.update(() => {
-    const rootNode = $getRoot()
-    rootNode.selectStart()
-  })
-}
+import {
+  deleteTable,
+  insertRow,
+  insertColumn,
+  deleteRow,
+  deleteColumn,
+} from "./tableActions"
 
 const useTableActionContext = (): [
   LexicalEditor,
@@ -80,14 +71,7 @@ export const useDeleteColumn = () => {
   const [editor, tableCellNode, setIsOpen] = useTableActionContext()
 
   return () => {
-    if (!tableCellNode) return
-    editor.update(() => {
-      $deleteTableColumn(
-        $getTableNodeFromLexicalNodeOrThrow(tableCellNode),
-        $getTableColumnIndexFromTableCellNode(tableCellNode),
-      )
-      clearTableSelection(editor, tableCellNode)
-    })
+    deleteColumn(editor, tableCellNode)
     setIsOpen(false)
   }
 }
@@ -96,14 +80,7 @@ export const useDeleteRow = () => {
   const [editor, tableCellNode, setIsOpen] = useTableActionContext()
 
   return () => {
-    editor.update(() => {
-      if (!tableCellNode) return
-      $removeTableRowAtIndex(
-        $getTableNodeFromLexicalNodeOrThrow(tableCellNode),
-        $getTableRowIndexFromTableCellNode(tableCellNode),
-      )
-      clearTableSelection(editor, tableCellNode)
-    })
+    deleteRow(editor, tableCellNode)
     setIsOpen(false)
   }
 }
