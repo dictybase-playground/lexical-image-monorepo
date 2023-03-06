@@ -2,7 +2,7 @@ import { useState } from "react"
 import { DndContext, UniqueIdentifier, useDroppable } from "@dnd-kit/core"
 import { SortableContext } from "@dnd-kit/sortable"
 import { Container } from "@material-ui/core"
-import { onDragEndCreator } from "./dragHandlers"
+import onDragEndCreator from "./dragHandlers"
 import SortableItem from "./SortableItem"
 import useContentAreaStyles from "./useContentAreaStyles"
 
