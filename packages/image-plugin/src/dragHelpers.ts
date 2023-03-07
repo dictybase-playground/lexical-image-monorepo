@@ -30,8 +30,8 @@ export const getRangeSelectionFromPoint = (x: number, y: number) => {
       offsetNode,
       caretPosition.offset,
     )
-    return rangeSelection
   }
+
   if (document.caretRangeFromPoint) {
     const range = document.caretRangeFromPoint(x, y)
     if (!range) return null
