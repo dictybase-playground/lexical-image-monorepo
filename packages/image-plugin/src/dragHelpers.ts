@@ -1,10 +1,4 @@
-import {
-  $getSelection,
-  $isNodeSelection,
-  $getNearestNodeFromDOMNode,
-  $createRangeSelection,
-  TextNode,
-} from "lexical"
+import { $getSelection, $isNodeSelection, $createRangeSelection } from "lexical"
 import { $isImageNode } from "./ImageNode"
 
 export const getImageNodeFromSelection = () => {
@@ -19,6 +13,7 @@ export const getRangeSelectionFromPoint = (x: number, y: number) => {
   // @ts-ignore
   if (document.caretPositionFromPoint) {
     // @ts-ignore
+
     const caretPosition = document.caretPositionFromPoint(x, y)
     if (!caretPosition) return null
 
