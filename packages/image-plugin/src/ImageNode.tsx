@@ -7,7 +7,7 @@ import {
 } from "lexical"
 import ImageComponent from "./ImageComponent"
 
-type SerializedImageNode = Spread<
+export type SerializedImageNode = Spread<
   {
     source: string
     width: number
