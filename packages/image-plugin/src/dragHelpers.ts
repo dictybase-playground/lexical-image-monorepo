@@ -7,6 +7,14 @@ import {
 } from "lexical"
 import { $isImageNode } from "./ImageNode"
 
+export const getImageNodeFromElement = (element: HTMLElement | Node) => {
+  console.log("element", element)
+  const imageNode = $getNearestNodeFromDOMNode(element)
+  console.log(imageNode)
+  if (!imageNode) return null
+  return $isImageNode(imageNode) ? imageNode : null
+}
+
 export const getImageNodeFromSelection = () => {
   const selection = $getSelection()
   if (!$isNodeSelection(selection)) return null
