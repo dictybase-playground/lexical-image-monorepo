@@ -10,27 +10,26 @@ export const getImageNodeFromSelection = () => {
 
 export const getRangeSelectionFromPoint = (x: number, y: number) => {
   const rangeSelection = $createRangeSelection()
+  let range: StaticRange | null = null
   // @ts-ignore
   if (document.caretPositionFromPoint) {
     // @ts-ignore
-
     const caretPosition = document.caretPositionFromPoint(x, y)
     if (!caretPosition) return null
-
-    rangeSelection.applyDOMRange({
+    range = {
       startContainer: caretPosition.offsetNode,
       endContainer: caretPosition.offsetNode,
       startOffset: caretPosition.offset,
       endOffset: caretPosition.offset,
       collapsed: true,
-    })
+    }
   }
 
   if (document.caretRangeFromPoint) {
-    const range = document.caretRangeFromPoint(x, y)
-    if (!range) return null
-    rangeSelection.applyDOMRange(range)
+    range = document.caretRangeFromPoint(x, y)
   }
 
+  if (!range) return null
+  rangeSelection.applyDOMRange(range)
   return rangeSelection
 }
