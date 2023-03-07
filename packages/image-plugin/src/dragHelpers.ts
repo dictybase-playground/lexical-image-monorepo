@@ -20,16 +20,15 @@ export const getRangeSelectionFromPoint = (x: number, y: number) => {
   if (document.caretPositionFromPoint) {
     // @ts-ignore
     const caretPosition = document.caretPositionFromPoint(x, y)
-    const offsetNode = $getNearestNodeFromDOMNode(caretPosition.offsetNode)
-    if (!offsetNode || !(offsetNode instanceof TextNode)) return null
     if (!caretPosition) return null
 
-    rangeSelection.setTextNodeRange(
-      offsetNode,
-      caretPosition.offset,
-      offsetNode,
-      caretPosition.offset,
-    )
+    rangeSelection.applyDOMRange({
+      startContainer: caretPosition.offsetNode,
+      endContainer: caretPosition.offsetNode,
+      startOffset: caretPosition.offset,
+      endOffset: caretPosition.offset,
+      collapsed: true,
+    })
   }
 
   if (document.caretRangeFromPoint) {
