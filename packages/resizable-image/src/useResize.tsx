@@ -1,98 +1,16 @@
-import { useAtom, useSetAtom } from "jotai"
 import React, { useRef } from "react"
+import { useAtom, useSetAtom } from "jotai"
 import { ImageDimensionsAtom, isResizingAtom } from "./state"
+import { initializeMouseMoveCreator } from "./resizeHelpers"
 
-export type Direction =
-  | "north"
-  | "south"
-  | "east"
-  | "west"
-  | "ne"
-  | "nw"
-  | "se"
-  | "sw"
+export type Direction = "ne" | "nw" | "se" | "sw"
 
-export type MouseMoveHandlerCreator = (
-  initialValues: {
-    initialX: number
-    initialY: number
-    initialWidth: number
-    initialHeight: number
-  },
-  handleResize: (width: number, height: number) => void,
-) => (event: MouseEvent) => void
-
-// Since the addEventListener method expects a listener function which accepts
-// only an event listener, these functions are curried to provide arguments
-// for the other parameters in advance.
-export const createNorthMoveHandler: MouseMoveHandlerCreator =
-  (initialValues, handleResize) => (event) => {
-    const { initialY, initialHeight, initialWidth } = initialValues
-    const finalY = event.clientY
-
-    const newHeight = Math.floor(initialHeight - (finalY - initialY))
-    handleResize(initialWidth, newHeight)
-  }
-
-export const createSouthMoveHandler: MouseMoveHandlerCreator =
-  (initialValues, handleResize) => (event) => {
-    const { initialY, initialHeight, initialWidth } = initialValues
-    const finalY = event.clientY
-
-    const newHeight = Math.floor(initialHeight + finalY - initialY)
-    handleResize(initialWidth, newHeight)
-  }
-
-export const createEastMoveHandler: MouseMoveHandlerCreator =
-  (initialValues, handleResize) => (event) => {
-    const { initialX, initialHeight, initialWidth } = initialValues
-    const finalX = event.clientX
-
-    const newWidth = initialWidth + finalX - initialX
-    handleResize(newWidth, initialHeight)
-  }
-
-export const createWestMoveHandler: MouseMoveHandlerCreator =
-  (initialValues, handleResize) => (event) => {
-    const { initialX, initialHeight, initialWidth } = initialValues
-    const finalX = event.clientX
-
-    const newWidth = initialWidth - (finalX - initialX)
-    handleResize(newWidth, initialHeight)
-  }
-
-export const createDiagonalEastMoveHandler: MouseMoveHandlerCreator =
-  (initialValues, handleResize) => (event) => {
-    const { initialX, initialHeight, initialWidth } = initialValues
-    const aspectRatio = initialWidth / initialHeight
-    const finalX = event.clientX
-
-    const newWidth = Math.floor(initialWidth + finalX - initialX)
-    const newHeight = newWidth / aspectRatio
-    handleResize(newWidth, newHeight)
-  }
-
-export const createDiagonalWestMoveHandler: MouseMoveHandlerCreator =
-  (initialValues, handleResize) => (event) => {
-    const { initialX, initialHeight, initialWidth } = initialValues
-    const aspectRatio = initialWidth / initialHeight
-    const finalX = event.clientX
-
-    const newWidth = initialWidth - (finalX - initialX)
-    const newHeight = newWidth / aspectRatio
-    handleResize(newWidth, newHeight)
-  }
-
-const directionToHandler = new Map<Direction, MouseMoveHandlerCreator>([
-  ["north", createNorthMoveHandler],
-  ["south", createSouthMoveHandler],
-  ["east", createEastMoveHandler],
-  ["west", createWestMoveHandler],
-  ["ne", createDiagonalEastMoveHandler],
-  ["se", createDiagonalEastMoveHandler],
-  ["nw", createDiagonalWestMoveHandler],
-  ["sw", createDiagonalWestMoveHandler],
-])
+const handlerCreators = {
+  ne: initializeMouseMoveCreator(true),
+  se: initializeMouseMoveCreator(true),
+  nw: initializeMouseMoveCreator(false),
+  sw: initializeMouseMoveCreator(false),
+}
 /**
  * A React hook that returns a mousedown event handler used to resize elements
  *
@@ -102,7 +20,6 @@ const directionToHandler = new Map<Direction, MouseMoveHandlerCreator>([
  * @returns an event handler for mousedown events
  */
 export const useResize = (
-  imageContainer: HTMLDivElement,
   onResize: (width: number, height: number) => void,
 ) => {
   // moveHandlerReference is used to track which moveHandler is currently registered
@@ -133,8 +50,8 @@ export const useResize = (
   ) => {
     event.preventDefault()
     setIsResizing(true)
-    const { width: initialWidth, height: initialHeight } = dimensions
 
+    const { width: initialWidth, height: initialHeight } = dimensions
     const initialValues = {
       initialY: event.clientY,
       initialX: event.clientX,
@@ -142,18 +59,18 @@ export const useResize = (
       initialHeight,
     }
 
-    const mouseMoveHandlerCreator = directionToHandler.get(direction)
-    if (!mouseMoveHandlerCreator) return
+    const createMoveHandler = handlerCreators[direction]
+    if (!createMoveHandler) return
+
     const handleResize = (width: number, height: number) => {
       onResize(width, height)
       setDimensions({ width, height })
     }
-    const mouseMoveHandler = mouseMoveHandlerCreator(
-      initialValues,
-      handleResize,
-    )
-    moveHandlerReference.current.handler = mouseMoveHandler
-    document.addEventListener("mousemove", mouseMoveHandler)
+
+    const onMouseMove = createMoveHandler(initialValues, handleResize)
+
+    moveHandlerReference.current.handler = onMouseMove
+    document.addEventListener("mousemove", onMouseMove)
     document.addEventListener("mouseup", onMouseUp, { once: true })
   }
 
