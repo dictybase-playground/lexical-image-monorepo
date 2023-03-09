@@ -39,12 +39,12 @@ export const onDrop = (event: DragEvent, editor: LexicalEditor) => {
   )
 
   $setSelection(rangeSelection)
-
+  imageNode.remove()
   editor.dispatchCommand(INSERT_IMAGE_COMMAND, {
     source: imageNode.source,
     width: imageNode.width,
     height: imageNode.height,
-    key: imageNode.getKey(),
+    key: imageNode.key,
   })
   return true
 }
