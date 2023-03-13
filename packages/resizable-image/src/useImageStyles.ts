@@ -12,13 +12,16 @@ export type StyleProperties = {
 
 const useImageStyles = makeStyles<Theme, StyleProperties>({
   root: {
+    margin: "10px",
+    float: "left",
     position: "relative",
     height: ({ height: currentHeight }) => `${currentHeight}px`,
     width: ({ width: currentWidth }) => `${currentWidth}px`,
-    display: "flex",
+    display: "inline-flex",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "black",
+    overflow: "hidden",
   },
   image: {
     aspectRatio: "1",

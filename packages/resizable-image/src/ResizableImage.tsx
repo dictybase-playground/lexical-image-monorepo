@@ -49,11 +49,12 @@ const ResizableImage = ({
 
   return (
     <Container
+      disableGutters
       draggable={isSelected}
       ref={imageContainerReference}
-      disableGutters
       className={root}>
       <img
+        draggable={isSelected}
         ref={imageReference}
         src={src}
         alt={alt}
