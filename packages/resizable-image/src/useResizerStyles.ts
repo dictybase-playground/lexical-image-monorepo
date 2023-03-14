@@ -2,8 +2,8 @@ import { makeStyles } from "@material-ui/core"
 
 const useResizerStyles = makeStyles({
   root: {
-    height: "6px",
-    width: "6px",
+    height: "10px",
+    width: "10px",
     position: "absolute",
     backgroundColor: "rgb(60, 132, 244)",
     border: "1px solid #fff",
@@ -12,45 +12,45 @@ const useResizerStyles = makeStyles({
   north: {
     marginLeft: "auto",
     marginRight: "auto",
-    top: "-4px",
+    top: "-5px",
     cursor: "n-resize",
   },
   south: {
     marginLeft: "auto",
     marginRight: "auto",
-    bottom: "-4px",
+    bottom: "-5px",
     cursor: "s-resize",
   },
   east: {
     marginTop: "auto",
     marginBottom: "auto",
-    right: "-4px",
+    right: "-5px",
     cursor: "w-resize",
   },
   west: {
     marginTop: "auto",
     marginBottom: "auto",
-    left: "-4px",
+    left: "-5px",
     cursor: "e-resize",
   },
   ne: {
-    top: "-4px",
-    right: "-4px",
+    top: "-5px",
+    right: "-5px",
     cursor: "ne-resize",
   },
   nw: {
-    top: "-4px",
-    left: "-4px",
+    top: "-5px",
+    left: "-5px",
     cursor: "nw-resize",
   },
   se: {
-    bottom: "-4px",
-    right: "-4px",
+    bottom: "-5px",
+    right: "-5px",
     cursor: "se-resize",
   },
   sw: {
-    bottom: "-4px",
-    left: "-4px",
+    bottom: "-5px",
+    left: "-5px",
     cursor: "sw-resize",
   },
 })
