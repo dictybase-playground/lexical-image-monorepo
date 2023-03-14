@@ -1,9 +1,10 @@
 import { makeStyles, Theme } from "@material-ui/core"
+import { ImageAlignment } from "./state"
 
 export type StyleProperties = {
   height: number
   width: number
-  alignment: string
+  alignment: ImageAlignment
   fit: string
   duration: number
   easing: string
