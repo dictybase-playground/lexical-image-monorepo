@@ -3,6 +3,7 @@ import { makeStyles, Theme } from "@material-ui/core"
 export type StyleProperties = {
   height: number
   width: number
+  alignment: string
   fit: string
   duration: number
   easing: string
@@ -13,7 +14,7 @@ export type StyleProperties = {
 const useImageStyles = makeStyles<Theme, StyleProperties>({
   root: {
     margin: "10px",
-    float: "left",
+    float: ({ alignment }) => alignment,
     position: "relative",
     height: ({ height: currentHeight }) => `${currentHeight}px`,
     width: ({ width: currentWidth }) => `${currentWidth}px`,

@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import { useAtomValue } from "jotai"
 import { Container } from "@material-ui/core"
-import { ImageDimensionsAtom } from "./state"
+import { ImageDimensionsAtom, ImageAlignmentAtom } from "./state"
 import LoadingDisplay from "./LoadingDisplay"
 import ErrorDisplay from "./ErrorDisplay"
 import ImageResizer from "./ImageResizer"
+import ImageMenu from "./ImageMenu"
 import useImageStyles from "./useImageStyles"
 
 export type ImageProperties = {
@@ -29,12 +30,13 @@ const ResizableImage = ({
   onResize,
 }: ImageProperties) => {
   const dimensions = useAtomValue(ImageDimensionsAtom)
+  const alignment = useAtomValue(ImageAlignmentAtom)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
-  const imageContainerReference = useRef<HTMLImageElement>(null)
   const { root, image, icons } = useImageStyles({
     width: dimensions.width,
     height: dimensions.height,
+    alignment,
     fit,
     easing,
     duration,
@@ -48,14 +50,10 @@ const ResizableImage = ({
   }
 
   return (
-    <Container
-      disableGutters
-      draggable={isSelected}
-      ref={imageContainerReference}
-      className={root}>
+    <Container disableGutters draggable={isSelected} className={root}>
       <img
-        draggable={isSelected}
         ref={imageReference}
+        draggable={isSelected}
         src={src}
         alt={alt}
         className={image}
@@ -64,8 +62,11 @@ const ResizableImage = ({
       />
       {loading ? <LoadingDisplay icons={icons} /> : null}
       {error ? <ErrorDisplay icons={icons} /> : null}
-      {imageContainerReference.current && isSelected ? (
-        <ImageResizer onResize={onResize} />
+      {isSelected ? (
+        <>
+          <ImageResizer onResize={onResize} />
+          <ImageMenu />
+        </>
       ) : null}
     </Container>
   )
