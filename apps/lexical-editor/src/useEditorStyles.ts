@@ -10,6 +10,8 @@ export const useEditorInputStyles = makeStyles({
     outline: "0",
     padding: "15px 10px",
     caretColor: "#444",
+    display: "flex",
+    flexDirection: "column",
   },
 })
 
