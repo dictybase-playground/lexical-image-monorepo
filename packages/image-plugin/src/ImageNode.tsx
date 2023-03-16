@@ -98,13 +98,13 @@ class ImageNode extends DecoratorNode<JSX.Element> {
   }
 
   createDOM(config: EditorConfig) {
-    const div = document.createElement("div")
+    const span = document.createElement("span")
     const { theme } = config
     const className = theme.image
     if (className) {
-      div.className = className
+      span.className = className
     }
-    return div
+    return span
   }
 
   updateDOM() {

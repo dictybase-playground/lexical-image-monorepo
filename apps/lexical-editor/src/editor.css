@@ -27,6 +27,8 @@
   margin: 0;
   margin-bottom: 8px;
   position: relative;
+  display: flex;
+  gap: 10px;
 }
 
 .editor-paragraph:last-child {
