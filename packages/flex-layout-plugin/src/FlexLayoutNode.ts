@@ -1,13 +1,17 @@
 import {
   EditorConfig,
   ElementNode,
-  $createParagraphNode,
   LexicalNode,
+  $createParagraphNode,
+  $isParagraphNode,
+  ParagraphNode,
 } from "lexical"
+
+const nodeTypeName = "flex-layout"
 
 class FlexLayoutNode extends ElementNode {
   static getType() {
-    return "flex-layout"
+    return nodeTypeName
   }
 
   static clone(node: FlexLayoutNode) {
@@ -19,8 +23,26 @@ class FlexLayoutNode extends ElementNode {
     return false
   }
 
+  static importJSON() {
+    return new FlexLayoutNode()
+  }
+
+  exportJSON() {
+    return {
+      ...super.exportJSON(),
+      type: nodeTypeName,
+    }
+  }
+
   updateDOM() {
     return false
+  }
+
+  getParagraphNodeOrThrow() {
+    const paragraphNode = this.getChildren().find((node) =>
+      $isParagraphNode(node),
+    )
+    return paragraphNode ? (paragraphNode as ParagraphNode) : null
   }
 
   createDOM(config: EditorConfig) {
@@ -37,7 +59,7 @@ class FlexLayoutNode extends ElementNode {
 }
 
 export const $isFlexLayoutNode = (node: LexicalNode): node is FlexLayoutNode =>
-  node.getType() === "flex-layout"
+  node.getType() === nodeTypeName
 
 export const $createFlexLayoutNode = () => {
   const paragraphNode = $createParagraphNode()
