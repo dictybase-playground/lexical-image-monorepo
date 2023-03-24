@@ -1,21 +1,15 @@
-import { createEditor, $getRoot, $createParagraphNode } from "lexical"
+import { createEditor } from "lexical"
 import { LexicalComposer } from "@lexical/react/LexicalComposer"
-import type { NodeMap } from "lexical"
 import type { InitialConfigType } from "@lexical/react/LexicalComposer"
-import FlexLayoutNode, { $createFlexLayoutNode } from "./FlexLayoutNode"
+import FlexLayoutNode from "./FlexLayoutNode"
 
-const initialEditorState: NodeMap = new Map([["3", FlexLayoutNode]])
+const initialEditorStateString =
+  '{"root":{"children":[{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"flex-layout","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
 
-const generateInitialEditorState = () => {
-  const editor = createEditor({ nodes: [FlexLayoutNode] })
-  editor.update(() => {
-    const root = $getRoot()
-    const flexLayoutNode = $createFlexLayoutNode()
-    root.append(flexLayoutNode)
-    root.append($createParagraphNode())
-  })
-  return editor
-}
+const getInitialEditorState = () =>
+  createEditor({ nodes: [FlexLayoutNode] }).parseEditorState(
+    initialEditorStateString,
+  )
 
 type LexicalComposerFlexProperties = {
   initialConfig: InitialConfigType
@@ -27,11 +21,8 @@ const LexicalComposerFlex = ({
   children,
 }: LexicalComposerFlexProperties) => {
   let { editorState } = initialConfig
-  const editor = generateInitialEditorState()
-  console.log(editor.getEditorState())
-  //   console.log(generateInitialEditorState())
-  //   editorState = editorState || generateInitialEditorState()
-  //   console.log(editorState)
+  editorState = editorState || getInitialEditorState()
+
   return (
     <LexicalComposer initialConfig={{ ...initialConfig, editorState }}>
       {children}
