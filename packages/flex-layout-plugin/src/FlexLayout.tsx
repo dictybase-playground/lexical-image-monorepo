@@ -22,9 +22,7 @@ FlexLayoutProperties) => {
   const { item } = useFlexLayoutStyles()
 
   useEffect(() => {
-    console.log("useEffect")
     if (paragraphReference.current) {
-      console.log("Paragraph Text", paragraphReference.current.innerHTML)
       paragraphReference.current.innerHTML = textContent
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,7 +33,6 @@ FlexLayoutProperties) => {
       const node = $getNodeByKey(key)
       if (!node || !(node.getType() === "flex-layout-decorator")) return
       node.setTextContent(event.currentTarget.textContent || textContent)
-      console.log(node)
     })
   }
 
@@ -46,7 +43,6 @@ FlexLayoutProperties) => {
           ref={paragraphReference}
           contentEditable
           onInput={onInput}
-          // onClick={() => console.log("onClick")}
         />
       </Grid>
     </Grid>
