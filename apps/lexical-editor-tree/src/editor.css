@@ -27,6 +27,7 @@
   margin: 0;
   margin-bottom: 8px;
   position: relative;
+  flex-basis: 100%;
 }
 
 .editor-paragraph:last-child {
@@ -56,4 +57,8 @@
 .editor-tablecell {
   border: 1px solid rgb(156, 156, 156);
   border-collapse: collapse;
+}
+
+.editor-flex-layout {
+  column-gap: 10px;
 }
