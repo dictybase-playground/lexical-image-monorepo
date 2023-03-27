@@ -1,8 +1,7 @@
-import { LexicalComposer } from "@lexical/react/LexicalComposer"
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin"
 import { ContentEditable } from "@lexical/react/LexicalContentEditable"
-import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin"
 import { ListPlugin } from "@lexical/react/LexicalListPlugin"
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin"
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary"
 import { ListItemNode, ListNode } from "@lexical/list"
 import { HeadingNode, QuoteNode } from "@lexical/rich-text"
@@ -13,6 +12,12 @@ import { LocalPersistencePlugin } from "persistence-plugin"
 import { WidthTablePlugin, WidthTableNode } from "width-table-plugin"
 import { TableActionPlugin } from "table-action-plugin"
 import { TreeViewPlugin } from "treeview-plugin"
+import {
+  FlexLayoutPlugin,
+  FlexLayoutNode,
+  FlexLayoutDecoratorNode,
+  LexicalComposerFlex,
+} from "flex-layout-plugin"
 import Toolbar from "dictybase-toolbar"
 import {
   useEditorInputStyles,
@@ -24,6 +29,7 @@ import "./editor.css"
 const usePaperStyles = makeStyles({
   root: {
     position: "relative",
+    overflow: "hidden",
   },
 })
 
@@ -37,6 +43,8 @@ const editorTheme = {
   table: "editor-table",
   tableCell: "editor-tablecell",
   tableCellHeader: "editor-tablecell-head",
+  image: "editor-image",
+  flexLayout: "editor-flex-layout",
 }
 
 const onError = (error: Error) => {
@@ -56,6 +64,8 @@ const initialConfig = {
     TableCellNode,
     TableRowNode,
     WidthTableNode,
+    FlexLayoutNode,
+    FlexLayoutDecoratorNode,
   ],
   onError,
 }
@@ -67,12 +77,13 @@ const EditorV8 = () => {
   const paperClasses = usePaperStyles()
 
   return (
-    <LexicalComposer initialConfig={initialConfig}>
+    <LexicalComposerFlex initialConfig={initialConfig}>
       <HistoryPlugin />
       <ListPlugin />
+      <ImagePlugin />
       <WidthTablePlugin />
       <TableActionPlugin />
-      <ImagePlugin />
+      <FlexLayoutPlugin />
       <Grid container direction="column">
         <Grid item>
           <Toolbar />
@@ -97,7 +108,7 @@ const EditorV8 = () => {
         </Grid>
       </Grid>
       <TreeViewPlugin />
-    </LexicalComposer>
+    </LexicalComposerFlex>
   )
 }
 
