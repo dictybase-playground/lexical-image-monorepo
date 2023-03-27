@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 import {
   COMMAND_PRIORITY_EDITOR,
-  $insertNodes,
   DRAGSTART_COMMAND,
   COMMAND_PRIORITY_HIGH,
   DROP_COMMAND,
@@ -10,6 +9,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import ImageNode from "./ImageNode"
 import { INSERT_IMAGE_COMMAND, InsertImagePayload } from "./InsertImageCommand"
 import { onDragStart, onDrop } from "./dragHandlers"
+import insertNodeIntoFlexRow from "./InsertImageHelpers"
 
 const ImagePlugin = () => {
   const [editor] = useLexicalComposerContext()
@@ -23,7 +23,7 @@ const ImagePlugin = () => {
       INSERT_IMAGE_COMMAND,
       (payload: InsertImagePayload) => {
         const imageNode = new ImageNode(payload)
-        $insertNodes([imageNode])
+        insertNodeIntoFlexRow(editor, imageNode)
         return true
       },
       COMMAND_PRIORITY_EDITOR,
