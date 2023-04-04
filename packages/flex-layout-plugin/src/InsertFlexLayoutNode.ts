@@ -1,43 +1,48 @@
-import { TextNode, $getSelection, $isRangeSelection } from "lexical"
+import {
+  $isTextNode,
+  $isElementNode,
+  $getSelection,
+  $isRangeSelection,
+} from "lexical"
 import { $createFlexLayoutNode } from "./FlexLayoutNode"
 import {
-  getImmediateRootDescendantFromRangeSelection,
-  getSelectionPoints,
-  getTextEdges,
+  getImmediateRootDescendant,
+  getNodeAtCaret,
+  handleTextContent,
 } from "./helpers"
 
 const InsertFlexLayoutNode = () => {
   const selection = $getSelection()
-  if (!selection || !$isRangeSelection(selection)) return false
-  const selectedNode = getImmediateRootDescendantFromRangeSelection(selection)
-  if (!selectedNode) return false
+  if (!selection || !$isRangeSelection(selection)) return true
 
-  const flexLayoutNode = $createFlexLayoutNode()
-
-  const {
-    points: [offsetStart, offsetEnd],
-    startNode,
-  } = getSelectionPoints(selection)
-
-  if (offsetStart === 0 || offsetEnd === 0) {
-    selectedNode.insertBefore(flexLayoutNode)
-  } else {
-    selectedNode.insertAfter(flexLayoutNode)
-
-    const paragraphNode = flexLayoutNode.getParagraphNodeOrThrow()
-    if (!paragraphNode) return false
-    paragraphNode.select()
-
-    const [textToRemain, textToMove] = getTextEdges(
-      selectedNode.getTextContent(),
-      offsetStart,
-      offsetEnd,
-    )
-    if (textToMove) {
-      paragraphNode.append(new TextNode(textToMove))
-      startNode.setTextContent(textToRemain)
-    }
+  if (!selection.isCollapsed()) {
+    selection.removeText()
+    return true
   }
+  const selectedPoint = getNodeAtCaret(selection)
+  if (!selectedPoint) return true
+
+  const selectedFlexLayoutNode = getImmediateRootDescendant(selection)
+  if (!selectedFlexLayoutNode) return true
+
+  const newFlexLayoutNode = $createFlexLayoutNode()
+  const newParagraphNode = newFlexLayoutNode.getParagraphNodeOrThrow()
+
+  if ($isElementNode(selectedPoint.getNode())) {
+    selectedFlexLayoutNode.insertAfter(newFlexLayoutNode)
+    newParagraphNode.select(0, 0)
+  }
+
+  if ($isTextNode(selectedPoint.getNode()) && selectedPoint.offset === 0) {
+    selectedFlexLayoutNode.insertBefore(newFlexLayoutNode)
+  }
+
+  if ($isTextNode(selectedPoint.getNode()) && selectedPoint.offset !== 0) {
+    selectedFlexLayoutNode.insertAfter(newFlexLayoutNode)
+    handleTextContent(selectedPoint, newParagraphNode)
+    newParagraphNode.select(0, 0)
+  }
+
   return true
 }
 
