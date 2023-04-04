@@ -7,14 +7,14 @@ const FlexLayoutPlugin = () => {
   const [editor] = useLexicalComposerContext()
 
   useEffect(() => {
-    const unregisterKeyEnter = editor.registerCommand(
+    const unregisterInsertParagraph = editor.registerCommand(
       INSERT_PARAGRAPH_COMMAND,
       InsertFlexLayoutNode,
       COMMAND_PRIORITY_HIGH,
     )
 
     return () => {
-      unregisterKeyEnter()
+      unregisterInsertParagraph()
     }
   })
 
