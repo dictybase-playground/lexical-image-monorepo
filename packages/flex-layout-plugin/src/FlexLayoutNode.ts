@@ -15,8 +15,8 @@ class FlexLayoutNode extends ElementNode {
   }
 
   static clone(node: FlexLayoutNode) {
-    const { key } = node
-    return new FlexLayoutNode(key)
+    const { __key } = node
+    return new FlexLayoutNode(__key)
   }
 
   canBeEmpty() {
@@ -42,7 +42,8 @@ class FlexLayoutNode extends ElementNode {
     const paragraphNode = this.getChildren().find((node) =>
       $isParagraphNode(node),
     )
-    return paragraphNode ? (paragraphNode as ParagraphNode) : null
+    if (!paragraphNode) throw new Error("FlexLayoutNode has no ParagraphNode")
+    return paragraphNode as ParagraphNode
   }
 
   createDOM(config: EditorConfig) {
