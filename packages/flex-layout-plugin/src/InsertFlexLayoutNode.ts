@@ -28,11 +28,6 @@ const InsertFlexLayoutNode = () => {
   const newFlexLayoutNode = $createFlexLayoutNode()
   const newParagraphNode = newFlexLayoutNode.getParagraphNodeOrThrow()
 
-  if ($isElementNode(selectedPoint.getNode())) {
-    selectedFlexLayoutNode.insertAfter(newFlexLayoutNode)
-    newParagraphNode.select(0, 0)
-  }
-
   if ($isTextNode(selectedPoint.getNode()) && selectedPoint.offset === 0) {
     selectedFlexLayoutNode.insertBefore(newFlexLayoutNode)
   }
@@ -43,6 +38,10 @@ const InsertFlexLayoutNode = () => {
     newParagraphNode.select(0, 0)
   }
 
+  if ($isElementNode(selectedPoint.getNode())) {
+    selectedFlexLayoutNode.insertAfter(newFlexLayoutNode)
+    newParagraphNode.select(0, 0)
+  }
   return true
 }
 
